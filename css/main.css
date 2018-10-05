@@ -1,0 +1,9 @@
+.main_form {
+    min-width: 50vw;
+    padding: 10px 30px;
+}
+
+.small_message {
+    margin-top: 25vh;
+    padding: 30px;
+}

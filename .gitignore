@@ -1,3 +1,4 @@
 .idea/*
+plugins/*
 *.iml
-*.conf
+conf.json
