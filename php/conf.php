@@ -47,3 +47,4 @@ class Conf
 }
 
 $conf = new Conf;
+$conf->load();

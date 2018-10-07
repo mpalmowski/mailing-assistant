@@ -1,6 +1,4 @@
 <?php
-include "conf.php";
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $conf->set();
     $conf->save();
@@ -17,7 +15,7 @@ $conf->load();
                     echo "
                 <div class='row m-0 justify-content-between'>
                     <div class='form-group col p-0'>
-                        <label>$key</label>
+                        <label>"._s($key)."</label>
                         <input type='text' class='form-control' name=$key value=$param>
                     </div>
                 </div>

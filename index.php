@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $known_pages = ['main', 'send_mail', 'subscribe', 'show_base', 'settings'];
 $languages = ['pl', 'en'];
 
@@ -18,10 +20,17 @@ if(isset($_GET['lang'])){
         $language = $lang;
     }
 }
+$_SESSION['lang'] = $language;
+
+include 'php/i18n.php';
+include 'php/conf.php';
+include 'php/database.php';
+
+$database = new Database($conf->params['db_servername'], $conf->params['db_username'], $conf->params['db_password'], $conf->params['db_name']);
 ?>
 
 <!DOCTYPE html>
-<html lang='pl'>
+<html>
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
@@ -46,3 +55,6 @@ if(isset($_GET['lang'])){
 </body>
 
 </html>
+
+<?php
+session_destroy();
