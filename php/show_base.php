@@ -1,19 +1,15 @@
 <?php
 include 'ssl.php';
-include 'database.php';
-include 'conf.php';
-
-$conf->load();
-$db = $database->connect($conf->params['db_servername'], $conf->params['db_username'], $conf->params['db_password'], $conf->params['db_name']);
 
 function printTable($db, $name){
-    $result = $db->query("SELECT * FROM $name");
+    $result = $db->select("*", $name);
+    $text = _s($name);
 
     echo <<< HTML
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th colspan="2" scope="col">$name</th>
+                <th colspan="2" scope="col">$text</th>
             </tr>
             <tr>
                 <th scope="col">id</th>
@@ -52,12 +48,12 @@ HTML;
     <div class="row text-center">
         <div class="col">
             <?php
-            printTable($db, "clients");
+            printTable($database, "clients");
             ?>
         </div>
         <div class="col">
             <?php
-            printTable($db, "distributors");
+            printTable($database, "distributors");
             ?>
         </div>
     </div>

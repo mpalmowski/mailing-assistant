@@ -7,13 +7,25 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php?pg=main">Wysyłanie</a>
+                    <a class="nav-link" href="index.php?pg=main">
+                        <?php
+                        echo _s('sending')
+                        ?>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php?pg=settings">Ustawienia</a>
+                    <a class="nav-link" href="index.php?pg=settings">
+                        <?php
+                        echo _s('settings')
+                        ?>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php?pg=show_base">Baza danych</a>
+                    <a class="nav-link" href="index.php?pg=show_base">
+                        <?php
+                        echo _s('database')
+                        ?>
+                    </a>
                 </li>
             </ul>
         </div>

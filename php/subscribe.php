@@ -1,7 +1,5 @@
 <?php
 include 'ssl.php';
-include 'database.php';
-include 'conf.php';
 
 $who = $_GET['who'];
 $type = $_GET['type'];
@@ -9,18 +7,14 @@ $type = $_GET['type'];
 $who = $ssl->decrypt($who);
 $table = $type == "cust" ? "clients" : "distributors";
 
-$conf->load();
-
-$db = $database->connect($conf->params['db_servername'], $conf->params['db_username'], $conf->params['db_password'], $conf->params['db_name']);
-
-$existing = $db->query("SELECT e_mail FROM $table WHERE e_mail = '$who'");
+$existing = $database->select("e_mail", $table, "e_mail = '$who'");
 $new_subscribent = false;
 if($existing->num_rows == 0){
     $new_subscribent = true;
 }
 
 if($new_subscribent){
-    $db->query("INSERT INTO $table (id, e_mail) VALUES (NULL, '$who')");
+    $database->insert($table, "id, e_mail", "NULL, '$who'");
 }
 
 if($new_subscribent){
