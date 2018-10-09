@@ -4,26 +4,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $conf->save();
 }
 
-$conf->load();
-?>
-<section>
-    <div class="col h-100 justify-content-center flex-column d-flex">
-        <div class="row w-100 justify-content-center flex-row d-flex">
-            <form action="index.php?pg=settings" class="main_form bg-light" method="post">
-                <?php
-                foreach ($conf->params as $key => $param) {
-                    echo "
-                <div class='row m-0 justify-content-between'>
-                    <div class='form-group col p-0'>
-                        <label>"._s($key)."</label>
-                        <input type='text' class='form-control' name=$key value=$param>
-                    </div>
-                </div>
-                    ";
-                }
-                ?>
-                <button class="btn btn-primary" type="submit">Zapisz</button>
-            </form>
+function printCategory($category, $params){
+    $category = _s($category);
+    echo <<< HTML
+    <h5 class="category-header">$category</h5>
+    <div class="settings-category">
+HTML;
+
+    foreach ($params as $name => $value){
+        $name_str = _s($name);
+        echo <<< HTML
+        <div class='row justify-content-around align-items-center p-3'>
+            <div class="col-md">
+                <label>$name_str</label>
+            </div>
+            <div class="col-md">
+                <input type='text' class='form-control' name=$name value=$value>
+            </div>
         </div>
-    </div>
-</section>
+HTML;
+
+    }
+
+    echo '</div>';
+}
+
+?>
+<div class="container">
+    <form action="index.php?pg=settings" class="py-3" method="post">
+        <?php
+        foreach ($conf->params as $category => $params) {
+            printCategory($category, $params);
+        }
+        ?>
+        <button class="btn btn-primary" type="submit">Zapisz</button>
+    </form>
+</div>

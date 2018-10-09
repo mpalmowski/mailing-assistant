@@ -4,21 +4,25 @@ class Conf
 {
     private $directory = "res/conf.json";
 
-    public $params = array(
-        'sender_name' => '',
-        'sender_address' => '',
-        'reply_address' => '',
-        'subscribe_link' => '',
-        'unsubscribe_link' => '',
-        'db_servername' => '',
-        'db_username' => '',
-        'db_password' => '',
-        'db_name' => ''
-    );
+    public $params = [
+        'sending' => [
+            'sender_name' => '',
+            'sender_address' => '',
+            'reply_address' => '',
+            'subscribe_link' => '',
+            'unsubscribe_link' => ''
+        ],
+        'database' => [
+            'db_servername' => '',
+            'db_username' => '',
+            'db_password' => '',
+            'db_name' => ''
+        ]
+    ];
 
     public function load()
     {
-        if (filesize($this->directory) <= 0) {
+        if (!file_exists($this->directory)) {
             $this->save();
             return;
         }
@@ -30,9 +34,11 @@ class Conf
     }
 
     public function set(){
-        foreach ($this->params as $key => &$param){
-            if(isset($_POST[$key])){
-                $param = $_POST[$key];
+        foreach ($this->params as &$category){
+            foreach ($category as $key => &$param){
+                if(isset($_POST[$key])){
+                    $param = $_POST[$key];
+                }
             }
         }
     }
@@ -43,6 +49,15 @@ class Conf
         $json = json_encode($this->params);
         fwrite($file, $json);
         fclose($file);
+    }
+
+    public function get($key){
+        foreach ($this->params as $category){
+            if (array_key_exists($key, $category)){
+                return $category[$key];
+            }
+        }
+        return "";
     }
 }
 

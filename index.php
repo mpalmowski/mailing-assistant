@@ -26,7 +26,7 @@ include 'php/i18n.php';
 include 'php/conf.php';
 include 'php/database.php';
 
-$database = new Database($conf->params['db_servername'], $conf->params['db_username'], $conf->params['db_password'], $conf->params['db_name']);
+$database = new Database($conf->get('db_servername'), $conf->get('db_username'), $conf->get('db_password'), $conf->get('db_name'));
 ?>
 
 <!DOCTYPE html>

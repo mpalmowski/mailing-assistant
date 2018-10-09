@@ -1,9 +1,28 @@
+.container {
+  max-width: 100ex; }
+
+html {
+  min-height: 100vh; }
+
+body {
+  height: 100%;
+  background: #f8f9fa; }
+
 .main_form {
-    min-width: 50vw;
-    padding: 10px 30px;
-}
+  padding: 10px 30px; }
+
+.settings-category {
+  background: white;
+  margin-bottom: 20px; }
+  .settings-category .col, .settings-category .row, .settings-category label {
+    margin: 0;
+    padding: 0; }
 
 .small_message {
-    margin-top: 25vh;
-    padding: 30px;
-}
+  margin-top: 25vh;
+  padding: 30px; }
+
+.table {
+  background: white; }
+
+/*# sourceMappingURL=main.css.map */
