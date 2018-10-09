@@ -2,6 +2,10 @@
 include 'ssl.php';
 
 function printTable($db, $name){
+    if(!$db->isConnected()){
+        return;
+    }
+
     $result = $db->select("*", $name);
     $text = _s($name);
 
@@ -21,15 +25,13 @@ HTML;
 
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
-            $id = $row["id"];
-            $e_mail = $row["e_mail"];
             echo <<< HTML
             <tr>
                 <td>
-                    $id
+                    $row[id]
                 </td>
                 <td>
-                    $e_mail
+                    $row[e_mail]
                 </td>
             </tr>
 HTML;
@@ -45,16 +47,16 @@ HTML;
 
 ?>
 <section>
-    <div class="row text-center">
-        <div class="col">
-            <?php
-            printTable($database, "clients");
-            ?>
+        <div class="row">
+            <div class="col">
+                <?php
+                printTable($database, "clients");
+                ?>
+            </div>
+            <div class="col">
+                <?php
+                printTable($database, "distributors");
+                ?>
+            </div>
         </div>
-        <div class="col">
-            <?php
-            printTable($database, "distributors");
-            ?>
-        </div>
-    </div>
 </section>

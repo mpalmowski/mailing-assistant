@@ -7,6 +7,8 @@ class Database
     public function __construct($servername, $username, $password, $db_name){
         if(!$this->connect($servername, $username, $password, $db_name))
             $this->connected = false;
+        else
+            $this->connected = true;
     }
 
     public function select($columns, $tables, $conditions=NULL){
@@ -27,5 +29,9 @@ class Database
             return false;
         }
         return true;
+    }
+
+    public  function isConnected(){
+        return $this->connected;
     }
 }
