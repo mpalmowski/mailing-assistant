@@ -1,5 +1,7 @@
 <?php
 session_start();
+ini_set('max_execution_time', 0);
+ini_set('display_errors', 'OFF');
 
 $known_pages = ['main', 'send_mail', 'subscribe', 'show_base', 'settings'];
 $languages = ['pl', 'en'];

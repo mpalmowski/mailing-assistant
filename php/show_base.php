@@ -2,6 +2,10 @@
 include 'ssl.php';
 
 function printTable($db, $name){
+    if(!$db->isConnected()){
+        return;
+    }
+
     $result = $db->select("*", $name);
     $text = _s($name);
 
