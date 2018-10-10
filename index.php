@@ -4,7 +4,6 @@ ini_set('max_execution_time', 0);
 ini_set('display_errors', 'OFF');
 
 $known_pages = ['main', 'send_mail', 'subscribe', 'show_base', 'settings'];
-$languages = ['pl', 'en'];
 
 $page = $known_pages[0];
 if(isset($_GET['pg'])){
@@ -15,18 +14,11 @@ if(isset($_GET['pg'])){
 }
 $pginc = "php/$page.php";
 
-$language = $languages[0];
-if(isset($_GET['lang'])){
-    $lang = $_GET['lang'];
-    if (in_array($lang, $languages)) {
-        $language = $lang;
-    }
-}
-$_SESSION['lang'] = $language;
-
-include 'php/i18n.php';
 include 'php/conf.php';
 include 'php/database.php';
+include 'php/i18n.php';
+
+$_SESSION['lang'] = $conf->get('language');
 
 $database = new Database($conf->get('db_servername'), $conf->get('db_username'), $conf->get('db_password'), $conf->get('db_name'));
 ?>

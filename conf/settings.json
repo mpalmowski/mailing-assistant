@@ -1,0 +1,39 @@
+{
+  "general" : {
+    "language" : {
+      "type" : "select",
+      "options" : ["en", "pl"]
+    }
+  },
+  "sending" : {
+    "sender_name": {
+      "type" : "input"
+    },
+    "sender_address": {
+      "type" : "input"
+    },
+    "reply_address": {
+      "type" : "input"
+    },
+    "subscribe_link": {
+      "type" : "input"
+    },
+    "unsubscribe_link": {
+      "type" : "input"
+    }
+  },
+  "database" : {
+    "db_servername" : {
+      "type" : "input"
+    },
+    "db_username" : {
+      "type" : "input"
+    },
+    "db_password" : {
+      "type" : "input"
+    },
+    "db_name" : {
+      "type" : "input"
+    }
+  }
+}

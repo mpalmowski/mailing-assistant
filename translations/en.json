@@ -9,6 +9,7 @@
   "distributor":"Distributor",
   "distributors":"Distributors",
   "en":"English",
+  "general":"General",
   "language":"Language",
   "message content":"Message content",
   "message sending error":"An error occured, message hasn't been sent to following recipients: ",
