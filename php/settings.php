@@ -64,10 +64,20 @@ HTML;
 
 ?>
 <div class="container">
-    <form action="index.php?pg=settings" class="py-3" method="post">
+    <form id="settings-form" action="index.php?pg=settings" class="py-3" method="post">
         <?php
         printSettings($conf->getParams());
         ?>
-        <button class="btn btn-primary" type="submit">Zapisz</button>
     </form>
+</div>
+<div class="footer">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <button class="btn btn-primary" type="submit" form="settings-form">
+                <?php
+                echo _s("save");
+                ?>
+            </button>
+        </div>
+    </div>
 </div>

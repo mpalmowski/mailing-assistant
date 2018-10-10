@@ -8,14 +8,14 @@
                     ?>
                 </label>
                 <select class="form-control" name="recipient_type">
-                    <option>
+                    <option value="client">
                         <?php
                         echo _s("client");
                         ?>
                     </option>
-                    <option>
+                    <option value="associate">
                         <?php
-                        echo _s("distributor");
+                        echo _s("associate");
                         ?>
                     </option>
                 </select>

@@ -15,6 +15,7 @@ class Conf
         'db_username' => '',
         'db_password' => '',
         'db_name' => '',
+        'db_subscribers_table' => 'subscribers',
         'ssl_key' => 'privateKey',
         'ssl_iv' => '1234abcdEFGH'
     ];

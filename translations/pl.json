@@ -1,4 +1,5 @@
 {
+  "associate":"Wspólnik",
   "client":"Klient",
   "clients":"Klienci",
   "database":"Baza danych",
@@ -6,8 +7,6 @@
   "db_password":"Hasło do bazy danych",
   "db_servername":"Adres serwera bazy danych",
   "db_username":"Login do bazy danych",
-  "distributor":"Dystrybutor",
-  "distributors":"Dystrybutorzy",
   "en":"English",
   "general":"Ogólne",
   "language":"Język",
@@ -19,11 +18,13 @@
   "recipients":"Odbiorcy",
   "recipient type":"Typ odbiorcy",
   "reply_address":"Adres zwrotny",
+  "save":"Zapisz",
   "sender_address":"Adres nadawcy",
   "sender_name":"Nazwa nadawcy",
   "send":"Wyślij",
   "sending":"Wysyłanie",
   "settings":"Ustawienia",
   "subscribe_link":"Link do subskrypcji",
+  "subscribers":"Subskrybenci",
   "unsubscribe_link":"Link do anulowania subskrypcji"
 }

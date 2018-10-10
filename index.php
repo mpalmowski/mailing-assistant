@@ -21,6 +21,7 @@ include 'php/i18n.php';
 $_SESSION['lang'] = $conf->get('language');
 
 $database = new Database($conf->get('db_servername'), $conf->get('db_username'), $conf->get('db_password'), $conf->get('db_name'));
+$database->create($conf->get('db_subscribers_table'));
 ?>
 
 <!DOCTYPE html>

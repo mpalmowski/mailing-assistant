@@ -1,4 +1,5 @@
 {
+  "associate":"Associate",
   "client":"Client",
   "clients":"Clients",
   "database":"Database",
@@ -6,8 +7,6 @@
   "db_password":"Database password",
   "db_servername":"Database server name",
   "db_username":"Database login",
-  "distributor":"Distributor",
-  "distributors":"Distributors",
   "en":"English",
   "general":"General",
   "language":"Language",
@@ -19,11 +18,13 @@
   "recipients":"Recipients",
   "recipient type":"Recipient type",
   "reply_address":"Reply address",
+  "save":"Save",
   "sender_address":"Sender address",
   "sender_name":"Sender name",
   "send":"Send",
   "sending":"Sending",
   "settings":"Settings",
   "subscribe_link":"Subscribe link",
+  "subscribers":"Subscribers",
   "unsubscribe_link":"Unsubscribe link"
 }

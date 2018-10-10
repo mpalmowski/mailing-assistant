@@ -25,4 +25,11 @@ body {
 .table {
   background: white; }
 
+.footer {
+  width: 100%;
+  position: sticky;
+  bottom: 0;
+  background: #f8f9fa;
+  padding: 1em; }
+
 /*# sourceMappingURL=main.css.map */

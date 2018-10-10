@@ -3,6 +3,11 @@
 class Database
 {
     private $db, $connected;
+    private $columns = [
+        "ID",
+        "EMail",
+        "SubscriberType"
+    ];
 
     public function __construct($servername, $username, $password, $db_name){
         if(!$this->connect($servername, $username, $password, $db_name))
@@ -33,5 +38,22 @@ class Database
 
     public  function isConnected(){
         return $this->connected;
+    }
+
+    public function getColumns(): array
+    {
+        return $this->columns;
+    }
+
+    public function create($table_name){
+        $query = <<< SQL
+        CREATE TABLE IF NOT EXISTS $table_name (
+            ID int NOT NULL AUTO_INCREMENT,
+            EMail varchar(255) NOT NULL,
+            SubscriberType varchar(255),
+            PRIMARY KEY (ID)
+        );
+SQL;
+        $this->db->query($query);
     }
 }
