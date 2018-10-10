@@ -4,7 +4,6 @@ include 'ssl.php';
 $who = $_GET['who'];
 $type = $_GET['type'];
 
-$who = $ssl->decrypt($who);
 $table = $type == "cust" ? "clients" : "distributors";
 
 $existing = $database->select("e_mail", $table, "e_mail = '$who'");

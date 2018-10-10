@@ -14,7 +14,9 @@ class Conf
         'db_servername' => '',
         'db_username' => '',
         'db_password' => '',
-        'db_name' => ''
+        'db_name' => '',
+        'ssl_key' => 'privateKey',
+        'ssl_iv' => '1234abcdEFGH'
     ];
 
     function __construct()
