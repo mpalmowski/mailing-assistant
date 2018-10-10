@@ -2,7 +2,7 @@
 
 class Conf
 {
-    private $directory = "res/conf.json";
+    private $directory = "conf/conf.json";
 
     public $params = [
         'sending' => [
