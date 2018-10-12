@@ -2,8 +2,10 @@
 session_start();
 ini_set('max_execution_time', 0);
 ini_set('display_errors', 'OFF');
+ini_set('log_errors', 1);
+ini_set('error_log', 'php.log');
 
-$known_pages = ['main', 'send_mail', 'subscribe', 'show_base', 'settings'];
+$known_pages = ['main', 'send_mail', 'show_base', 'settings'];
 
 $page = $known_pages[0];
 if(isset($_GET['pg'])){
@@ -18,10 +20,11 @@ include 'php/conf.php';
 include 'php/database.php';
 include 'php/i18n.php';
 
+$conf = new Conf;
+
 $_SESSION['lang'] = $conf->get('language');
 
-$database = new Database($conf->get('db_servername'), $conf->get('db_username'), $conf->get('db_password'), $conf->get('db_name'));
-$database->create($conf->get('db_subscribers_table'));
+$database = new Database($conf);
 ?>
 
 <!DOCTYPE html>

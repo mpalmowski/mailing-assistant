@@ -28,13 +28,7 @@ include 'sender.php';
 ob_flush();
 flush();
 
-$sender = new Sender(
-        $conf->get('sender_name'),
-        $conf->get('sender_address'),
-        $conf->get('reply_address'),
-        $conf->get('subscribe_link'),
-        $conf->get('unsubscribe_link')
-);
+$sender = new Sender($conf);
 
 $recipient_type = $_POST['recipient_type'];
 $subject = $_POST['subject'];

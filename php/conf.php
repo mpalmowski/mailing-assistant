@@ -17,7 +17,8 @@ class Conf
         'db_name' => '',
         'db_subscribers_table' => 'subscribers',
         'ssl_key' => 'privateKey',
-        'ssl_iv' => '1234abcdEFGH'
+        'ssl_iv' => '',
+        'ssl_encryption_method' => 'AES-256-CBC'
     ];
 
     function __construct()
@@ -73,5 +74,3 @@ class Conf
         return $this->params;
     }
 }
-
-$conf = new Conf;

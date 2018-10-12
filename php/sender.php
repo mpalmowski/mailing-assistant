@@ -5,13 +5,17 @@ class Sender
     private $sender_name, $sender_address, $reply_address, $subscribe_link, $unsubscribe_link, $header;
     private $variables, $links;
 
-    public function __construct($sender_name, $sender_address, $reply_address, $subscribe_link, $unsubscribe_link)
+    /**
+     * Sender constructor.
+     * @param Conf $conf
+     */
+    public function __construct($conf)
     {
-        $this->sender_name = $sender_name;
-        $this->sender_address = $sender_address;
-        $this->reply_address = $reply_address;
-        $this->subscribe_link = $subscribe_link;
-        $this->unsubscribe_link = $unsubscribe_link;
+        $this->sender_name = $conf->get('sender_name');
+        $this->sender_address = $conf->get('sender_address');
+        $this->reply_address = $conf->get('reply_address');
+        $this->subscribe_link = $conf->get('subscribe_link');
+        $this->unsubscribe_link = $conf->get('unsubscribe_link');
 
         $this->header = "MIME-Version: 1.0" . "\r\n";
         $this->header .= "Content-type:text/html;charset=UTF-8" . "\r\n";
