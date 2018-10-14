@@ -9,24 +9,27 @@ include 'lib/ssl.php';
 
 $conf = new Conf;
 $database = new Database($conf);
+$ssl = new Ssl($conf);
 
-$who = "";
-$type = "";
-if(isset($_GET['who']))
-    $who = $_GET['who'];
-if(isset($_GET['type']))
-    $type = $_GET['type'];
-
-$new_subscriber = !$database->subscriberExists($who, $type);
-
-if($new_subscriber){
-    $database->addSubscriber($who, $type);
+if(!isset($_GET['who']) || !isset($_GET['type'])){
+    error_log('Missing subscriber parameters');
+    die();
 }
 
-if($new_subscriber){
+$who = $_GET['who'];
+$type = $_GET['type'];
+
+$who = $ssl->decrypt($who);
+$type = $ssl->decrypt($type);
+
+$result = $database->addSubscriber($who, $type);
+
+if($result == 1){
     $message = 'Thank you for subscribing';
-} else {
+} else if ($result == 0) {
     $message = 'You have already subscribed for our newsletter';
+} else if ($result == -1) {
+    $message = 'An error occured';
 }
 
 ?>
@@ -46,7 +49,7 @@ if($new_subscriber){
 <section>
     <div class="col h-100 justify-content-center flex-column d-flex">
         <div class="row w-100 justify-content-center flex-row d-flex">
-            <div class="small_message bg-light">
+            <div class="small_message bg-white">
                 <h4 class="p-0 m-0 w-100 h-100 text-center">
                     <?php
                     echo $message;

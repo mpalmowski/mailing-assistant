@@ -47,12 +47,17 @@ class Database
 
     public function addSubscriber($e_mail, $type)
     {
+        if(!$e_mail || !$type)
+            return -1;
+        if($this->subscriberExists($e_mail, $type))
+            return 0;
         $this->insert(
             $this->subscribersTable,
             "$this->id_col,
             $this->e_mail_col, $this->type_col",
             "NULL, '$e_mail', '$type'"
         );
+        return 1;
     }
 
     public function connect($servername, $username, $password, $db_name)

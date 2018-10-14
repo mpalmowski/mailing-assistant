@@ -23,8 +23,6 @@
     </div>
 </section>
 <?php
-include '../lib/ssl.php';
-include '../lib/sender.php';
 ob_flush();
 flush();
 

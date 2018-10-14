@@ -19,6 +19,8 @@ $pginc = "pages/$page.php";
 include 'lib/conf.php';
 include 'lib/database.php';
 include 'lib/i18n.php';
+include 'lib/ssl.php';
+include 'lib/sender.php';
 
 $conf = new Conf;
 

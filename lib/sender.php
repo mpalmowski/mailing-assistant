@@ -3,7 +3,8 @@
 class Sender
 {
     private $sender_name, $sender_address, $reply_address, $subscribe_link, $unsubscribe_link, $header;
-    private $variables, $links;
+    private $links;
+    private $ssl;
 
     /**
      * Sender constructor.
@@ -21,6 +22,8 @@ class Sender
         $this->header .= "Content-type:text/html;charset=UTF-8" . "\r\n";
         $this->header .= "From: " . $this->sender_name . "<" . $this->sender_address . ">" . "\r\n";
         $this->header .= "Reply-To: " . $this->reply_address . "\r\n";
+
+        $this->ssl = new Ssl($conf);
     }
 
     public function send($subject, $message, $address, $type="")
@@ -33,12 +36,8 @@ class Sender
         if (!$this->validateAddress($address))
             return false;
 
-        $this->variables = [
-            "e-mail" => $address,
-            "subscriber_type" => $type
-        ];
-        $subscribe_link = $this->insertVariables($this->subscribe_link);
-        $unsubscribe_link = $this->insertVariables($this->unsubscribe_link);
+        $subscribe_link = $this->personalizeLink($this->subscribe_link, $address, $type);
+        $unsubscribe_link = $this->personalizeLink($this->unsubscribe_link, $address, $type);
 
         $this->links = [
             "subscribe_link" => $subscribe_link,
@@ -64,12 +63,17 @@ class Sender
         return $new_string;
     }
 
-    private function insertVariables($string)
+    private function personalizeLink($link, $address, $type)
     {
-        $new_string = $string;
-        foreach ($this->variables as $name => $value) {
-            $new_string = str_replace("_insert_" . $name . "_", $value, $new_string);
-        }
-        return $new_string;
+        $address = $this->ssl->encrypt($address);
+        $type = $this->ssl->encrypt($type);
+
+        $first_sign = "?";
+
+        if(strpos($link, '?') !== false)
+            $first_sign = "&";
+
+        $link .= $first_sign."who=".$address."&type=".$type;
+        return $link;
     }
 }

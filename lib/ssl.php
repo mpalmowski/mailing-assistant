@@ -13,8 +13,8 @@ class Ssl
 
     public function encrypt($input)
     {
-        $key = hash($this->algorythm, $this->key);
-        $iv = substr(sha1($this->algorythm, $this->iv), 0, 16);
+        $key = hash('sha256', $this->key);
+        $iv = substr(hash('sha256', $this->iv), 0, 16);
 
         $output = openssl_encrypt($input, $this->encrypt_method, $key, 0, $iv);
         $output = base64_encode($output);
@@ -23,8 +23,8 @@ class Ssl
 
     public function decrypt($input)
     {
-        $key = hash($this->algorythm, $this->key);
-        $iv = substr(sha1($this->algorythm, $this->iv), 0, 16);
+        $key = hash('sha256', $this->key);
+        $iv = substr(hash('sha256', $this->iv), 0, 16);
 
         $output = openssl_decrypt(base64_decode($input), $this->encrypt_method, $key, 0, $iv);
         return $output;
