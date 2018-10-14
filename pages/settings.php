@@ -1,4 +1,7 @@
 <?php
+/**
+ * @param Conf $conf
+ */
 function printSettings($conf)
 {
     $directory = "conf/settings.json";
@@ -13,12 +16,12 @@ function printSettings($conf)
         <div class="settings-category">
 HTML;
         foreach ($fields as $name => $field) {
-            if (!array_key_exists($name, $conf))
+            if (is_null($conf->get($name)))
                 continue;
             if ($field["type"] == "input")
-                printInput($name, $conf[$name]);
+                printInput($name, $conf->get($name));
             else if ($field["type"] == "select")
-                printSelect($name, $conf[$name], $field["options"]);
+                printSelect($name, $conf->get($name), $field["options"]);
         }
         echo '</div>';
     }
@@ -66,7 +69,7 @@ HTML;
 <div class="container">
     <form id="settings-form" action="index.php?pg=settings" class="py-3" method="post">
         <?php
-        printSettings($conf->getParams());
+        printSettings($conf);
         ?>
     </form>
 </div>

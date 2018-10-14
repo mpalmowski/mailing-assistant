@@ -21,19 +21,5 @@
     "unsubscribe_link": {
       "type" : "input"
     }
-  },
-  "database" : {
-    "db_servername" : {
-      "type" : "input"
-    },
-    "db_username" : {
-      "type" : "input"
-    },
-    "db_password" : {
-      "type" : "input"
-    },
-    "db_name" : {
-      "type" : "input"
-    }
   }
 }

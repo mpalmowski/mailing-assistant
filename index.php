@@ -14,11 +14,11 @@ if(isset($_GET['pg'])){
 		$page = $pg;
 	}
 }
-$pginc = "php/$page.php";
+$pginc = "pages/$page.php";
 
-include 'php/conf.php';
-include 'php/database.php';
-include 'php/i18n.php';
+include 'lib/conf.php';
+include 'lib/database.php';
+include 'lib/i18n.php';
 
 $conf = new Conf;
 
@@ -34,21 +34,21 @@ $database = new Database($conf);
     <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
     <title>Mailing Assistant</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet'>
-    <link href='css/bootstrap.min.css' rel='stylesheet'>
-    <link href='css/main.css' rel='stylesheet'>
-    <script src='js/jquery-3.3.1.js'></script>
-    <script src='js/popper.js'></script>
+    <link href='static/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='static/css/main.css' rel='stylesheet'>
+    <script src='static/js/jquery-3.3.1.js'></script>
+    <script src='static/js/popper.js'></script>
 </head>
 
 <body>
 
-<?php include 'php/header.php'; ?>
+<?php include 'pages/header.php'; ?>
 
 <?php include "$pginc"; ?>
 
-<?php include 'php/footer.php'; ?>
+<?php include 'pages/footer.php'; ?>
 
-<script src='js/bootstrap.min.js'></script>
+<script src='static/js/bootstrap.min.js'></script>
 
 </body>
 

@@ -3,9 +3,9 @@ session_start();
 ini_set('max_execution_time', 0);
 ini_set('display_errors', 'OFF');
 
-include 'php/conf.php';
-include 'php/database.php';
-include 'php/ssl.php';
+include 'lib/conf.php';
+include 'lib/database.php';
+include 'lib/ssl.php';
 
 $conf = new Conf;
 $database = new Database($conf);
@@ -37,10 +37,10 @@ if($new_subscriber){
     <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
     <title>Mailing Assistant</title>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet'>
-    <link href='css/bootstrap.min.css' rel='stylesheet'>
-    <link href='css/main.css' rel='stylesheet'>
-    <script src='js/jquery-3.3.1.js'></script>
-    <script src='js/popper.js'></script>
+    <link href='static/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='static/css/main.css' rel='stylesheet'>
+    <script src='static/js/jquery-3.3.1.js'></script>
+    <script src='static/js/popper.js'></script>
 </head>
 <body>
 <section>

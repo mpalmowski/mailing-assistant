@@ -1,0 +1,5 @@
+# Deny access to files with axtensions: .ini .log .json
+<FilesMatch "\.(ini|log|json)$">
+Order deny,allow
+Deny from all
+</FilesMatch>

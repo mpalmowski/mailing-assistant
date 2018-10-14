@@ -18,7 +18,7 @@ class Database
     public function __construct($conf)
     {
         $this->conf = $conf;
-        $this->subscribersTable = $conf->get('db_subscribers_table');
+        $this->subscribersTable = $conf->get('subscribers_table');
         if (!$this->connect($conf->get('db_servername'), $conf->get('db_username'), $conf->get('db_password'), $conf->get('db_name')))
             $this->connected = false;
         else {
