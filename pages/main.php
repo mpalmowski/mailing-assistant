@@ -1,5 +1,5 @@
-<div class="container bg-white">
-    <form action="index.php?pg=send_mail" class="main_form" method="post">
+<div class="container bg-white py-3 px-4">
+    <form action="index.php?pg=send_mail" id="sending-form" method="post">
         <div class="row m-0 justify-content-between">
             <div class="form-group col p-0">
                 <label>
@@ -45,10 +45,15 @@
             </label>
             <textarea class="form-control" name="addresses" rows="6"></textarea>
         </div>
-        <button class="btn btn-primary" type="submit">
-            <?php
-            echo _s("send");
-            ?>
-        </button>
     </form>
+    <button class="btn btn-primary" form="sending-form" type="submit">
+        <?php
+        echo _s("send");
+        ?>
+    </button>
+    <button class="btn btn-secondary" id="test_message">
+        <?php
+        echo _s("send test message");
+        ?>
+    </button>
 </div>

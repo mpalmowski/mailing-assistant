@@ -26,7 +26,7 @@ class Sender
         $this->ssl = new Ssl($conf);
     }
 
-    public function send($subject, $message, $address, $type="")
+    public function send($subject, $message, $address, $type, $insert_links = true)
     {
         $address = trim($address);
 
@@ -36,14 +36,15 @@ class Sender
         if (!$this->validateAddress($address))
             return false;
 
-        $subscribe_link = $this->personalizeLink($this->subscribe_link, $address, $type);
-        $unsubscribe_link = $this->personalizeLink($this->unsubscribe_link, $address, $type);
-
-        $this->links = [
-            "subscribe_link" => $subscribe_link,
-            "unsubscribe_link" => $unsubscribe_link
-        ];
-        $message = $this->insertLinks($message);
+        if($insert_links){
+            $subscribe_link = $this->personalizeLink($this->subscribe_link, $address, $type);
+            $unsubscribe_link = $this->personalizeLink($this->unsubscribe_link, $address, $type);
+            $this->links = [
+                "subscribe_link" => $subscribe_link,
+                "unsubscribe_link" => $unsubscribe_link
+            ];
+            $message = $this->insertLinks($message);
+        }
 
         return mail($address, $subject, $message, $this->header);
     }

@@ -16,6 +16,7 @@ class Conf
 
     function __construct()
     {
+        $this->conf_dir = dirname(__DIR__) . "/" . $this->conf_dir;
         $this->load();
         $this->set();
         $this->save();
@@ -24,7 +25,7 @@ class Conf
     public function load()
     {
         if (!file_exists($this->conf_dir)) {
-            error_log("Configuration file missing");
+            error_log("Configuration file missing: ".$this->conf_dir);
             return;
         }
         $this->configuration = parse_ini_file($this->conf_dir);

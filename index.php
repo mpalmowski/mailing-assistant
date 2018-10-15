@@ -51,6 +51,7 @@ $database = new Database($conf);
 <?php include 'pages/footer.php'; ?>
 
 <script src='static/js/bootstrap.min.js'></script>
+<script src='static/js/main.js'></script>
 
 </body>
 
