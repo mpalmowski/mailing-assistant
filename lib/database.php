@@ -5,11 +5,7 @@ class Database
     /**
      * @var mysqli $db
      */
-    private $db, $connected, $conf, $subscribersTable;
-    private $id_col = "ID";
-    private $e_mail_col = "EMail";
-    private $type_col = "SubscriberType";
-    private $num_cols = 3;
+    private $db, $connected, $conf, $subscribers_table, $e_mail_col, $agreement_col, $num_cols;
 
     /**
      * Database constructor.
@@ -18,46 +14,59 @@ class Database
     public function __construct($conf)
     {
         $this->conf = $conf;
-        $this->subscribersTable = $conf->get('subscribers_table');
+        $this->e_mail_col = $conf->get('e_mail_column');
+        $this->agreement_col = $conf->get('agreement_col');
+        $this->subscribers_table = $conf->get('subscribers_table');
         if (!$this->connect($conf->get('db_servername'), $conf->get('db_username'), $conf->get('db_password'), $conf->get('db_name')))
             $this->connected = false;
         else {
             $this->connected = true;
-            $this->createSubscribersTable();
         }
+        $this->num_cols = $this->getNumCols($conf->get('db_name'), $this->subscribers_table);
     }
 
-    public function getSubscribers()
+    public function getSubscribers($all = false)
     {
-        return $this->select("*", $this->subscribersTable);
+        $condition = "";
+        if(!$all)
+            $condition .= $this->agreement_col."=1";
+        return $this->select("*", $this->subscribers_table, $condition);
     }
 
-    public function subscriberExists($e_mail, $type)
+    public function getSubscribersArray()
+    {
+        $result = $this->getSubscribers();
+        $array = array();
+        if($result->num_rows > 0){
+            while ($row = $result->fetch_assoc()){
+                array_push($array, $row[$this->e_mail_col]);
+            }
+        }
+        return $array;
+    }
+
+    public function removeSubscriber($e_mail)
+    {
+        if(!$this->subscriberExists($e_mail))
+            return 0;
+        $query = "UPDATE $this->subscribers_table SET $this->agreement_col='0' WHERE $this->e_mail_col = '$e_mail'";
+        if($this->db->query($query))
+            return 1;
+        else
+            return -1;
+    }
+
+    public function subscriberExists($e_mail)
     {
         $existing = $this->select(
-            "*",
-            $this->subscribersTable,
-            "$this->e_mail_col = '$e_mail' AND $this->type_col = '$type'"
+            $this->e_mail_col,
+            $this->subscribers_table,
+            "$this->e_mail_col = '$e_mail'"
         );
         if ($existing->num_rows == 0) {
             return false;
         }
         return true;
-    }
-
-    public function addSubscriber($e_mail, $type)
-    {
-        if(!$e_mail || !$type)
-            return -1;
-        if($this->subscriberExists($e_mail, $type))
-            return 0;
-        $this->insert(
-            $this->subscribersTable,
-            "$this->id_col,
-            $this->e_mail_col, $this->type_col",
-            "NULL, '$e_mail', '$type'"
-        );
-        return 1;
     }
 
     public function connect($servername, $username, $password, $db_name)
@@ -80,8 +89,8 @@ class Database
             return;
         }
 
-        $result = $this->getSubscribers();
-        $text = _s($this->subscribersTable);
+        $result = $this->getSubscribers(true);
+        $text = _s($this->subscribers_table);
 
         echo <<< HTML
     <table class="table table-bordered mt-3">
@@ -92,9 +101,8 @@ class Database
             <tr>
 HTML;
 
-        echo "<th scope='col'>"._s($this->id_col)."</th>";
         echo "<th scope='col'>"._s($this->e_mail_col)."</th>";
-        echo "<th scope='col'>"._s($this->type_col)."</th>";
+        echo "<th scope='col'>"._s($this->agreement_col)."</th>";
 
         echo <<< HTML
             </tr>
@@ -105,9 +113,8 @@ HTML;
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
-                echo "<td>".$row[$this->id_col]."</td>";
                 echo "<td>".$row[$this->e_mail_col]."</td>";
-                echo "<td>"._s($row[$this->type_col])."</td>";
+                echo "<td>".$row[$this->agreement_col]."</td>";
                 echo "</tr>";
             }
         }
@@ -127,22 +134,14 @@ HTML;
         return $this->db->query($query);
     }
 
-    private function insert($table, $columns, $values)
+    private function getNumCols($db_name, $table_name)
     {
-        $query = "INSERT INTO $table ($columns) VALUES ($values)";
-        $this->db->query($query);
-    }
-
-    private function createSubscribersTable()
-    {
-        $query = <<< SQL
-        CREATE TABLE IF NOT EXISTS $this->subscribersTable (
-            ID int NOT NULL AUTO_INCREMENT,
-            EMail varchar(255) NOT NULL,
-            SubscriberType varchar(255),
-            PRIMARY KEY (ID)
-        );
-SQL;
-        $this->db->query($query);
+        $query = "SELECT count(*) AS num_cols
+                  FROM INFORMATION_SCHEMA.COLUMNS
+                  WHERE table_schema = '$db_name'
+                        AND table_name = '$table_name'";
+        $result = $this->db->query($query);
+        $row = $result->fetch_assoc();
+        return $row['num_cols'];
     }
 }

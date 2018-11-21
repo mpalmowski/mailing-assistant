@@ -1,8 +1,5 @@
 <section>
     <div class="col h-100 justify-content-center flex-column d-flex">
-        <div class="row w-100 justify-content-center flex-row d-flex">
-            <img class="mt-4" src="http://www.nocai.info/wp-content/uploads/2018/09/NOCAI-LOGO-200.png">
-        </div>
         <div class="sending row w-100 justify-content-center mt-5">
             <h5>
                 <?php
@@ -28,12 +25,17 @@ flush();
 
 $sender = new Sender($conf);
 
-$recipient_type = $_POST['recipient_type'];
 $subject = $_POST['subject'];
 $message = $_POST['message'];
+$send_mode = $_POST['send_mode'];
 $addresses = $_POST['addresses'];
 
-$addresses_array = explode(",", $addresses);
+$addresses_array = array();
+
+if($send_mode == "all")
+    $addresses_array = $database->getSubscribersArray();
+elseif ($send_mode == "manual")
+    $addresses_array = explode(",", $addresses);
 
 $errors = array();
 $nr_of_messages = sizeof($addresses_array);
@@ -42,7 +44,7 @@ $sent = array();
 foreach ($addresses_array as $address) {
     $address = trim($address);
 
-    if (!$sender->send($subject, $message, $address, $recipient_type)) {
+    if (!$sender->send($subject, $message, $address)) {
         array_push($errors, $address);
     } else {
         array_push($sent, $address);

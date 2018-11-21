@@ -11,6 +11,11 @@ class Ssl
         $this->encrypt_method = $conf->get('ssl_encryption_method');
     }
 
+    public function hash($input)
+    {
+        return substr(hash('sha256', $input), 0, 16);
+    }
+
     public function encrypt($input)
     {
         $key = hash('sha256', $this->key);

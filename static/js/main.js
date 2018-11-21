@@ -1,3 +1,9 @@
+$(document).ready(function () {
+    manageRecipients();
+});
+
+$("[name=send_mode]").change(manageRecipients);
+
 $("#test_message").click(function () {
     var subject = $("input[name='subject']").val();
     var message = $("textarea[name='message']").val();
@@ -14,3 +20,13 @@ $("#test_message").click(function () {
             console.log("Test message error: " + msg);
     });
 });
+
+function manageRecipients() {
+    var sendMode = $("[name=send_mode]").val();
+    var addressesBox = $("[name=addresses]");
+    if(sendMode === "manual"){
+        addressesBox.removeClass("d-none");
+    } else {
+        addressesBox.addClass("d-none");
+    }
+}

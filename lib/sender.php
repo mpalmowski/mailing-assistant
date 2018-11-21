@@ -2,7 +2,7 @@
 
 class Sender
 {
-    private $sender_name, $sender_address, $reply_address, $subscribe_link, $unsubscribe_link, $header;
+    private $sender_name, $sender_address, $reply_address, $unsubscribe_link, $header;
     private $links;
     private $ssl;
 
@@ -15,7 +15,6 @@ class Sender
         $this->sender_name = $conf->get('sender_name');
         $this->sender_address = $conf->get('sender_address');
         $this->reply_address = $conf->get('reply_address');
-        $this->subscribe_link = $conf->get('subscribe_link');
         $this->unsubscribe_link = $conf->get('unsubscribe_link');
 
         $this->header = "MIME-Version: 1.0" . "\r\n";
@@ -26,7 +25,7 @@ class Sender
         $this->ssl = new Ssl($conf);
     }
 
-    public function send($subject, $message, $address, $type, $insert_links = true)
+    public function send($subject, $message, $address, $insert_links = true)
     {
         $address = trim($address);
 
@@ -37,10 +36,8 @@ class Sender
             return false;
 
         if($insert_links){
-            $subscribe_link = $this->personalizeLink($this->subscribe_link, $address, $type);
-            $unsubscribe_link = $this->personalizeLink($this->unsubscribe_link, $address, $type);
+            $unsubscribe_link = $this->personalizeLink($this->unsubscribe_link, $address);
             $this->links = [
-                "subscribe_link" => $subscribe_link,
                 "unsubscribe_link" => $unsubscribe_link
             ];
             $message = $this->insertLinks($message);
@@ -64,17 +61,17 @@ class Sender
         return $new_string;
     }
 
-    private function personalizeLink($link, $address, $type)
+    private function personalizeLink($link, $address)
     {
+        $hash = $this->ssl->hash($address);
         $address = $this->ssl->encrypt($address);
-        $type = $this->ssl->encrypt($type);
 
         $first_sign = "?";
 
         if(strpos($link, '?') !== false)
             $first_sign = "&";
 
-        $link .= $first_sign."who=".$address."&type=".$type;
+        $link .= $first_sign."who=".$address."&ctrl=".$hash;
         return $link;
     }
 }

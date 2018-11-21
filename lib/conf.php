@@ -7,11 +7,11 @@ class Conf
         'sender_name' => '',
         'sender_address' => '',
         'reply_address' => '',
-        'subscribe_link' => '',
         'unsubscribe_link' => ''
     ];
 
     private $conf_dir = "conf/conf.ini";
+    private $params_dir = "conf/params.json";
     private $configuration;
 
     function __construct()
@@ -30,11 +30,15 @@ class Conf
         }
         $this->configuration = parse_ini_file($this->conf_dir);
 
-        foreach ($this->params as $key => &$param) {
-            if(isset($_COOKIE[$key])){
-                $param = $_COOKIE[$key];
-            }
+        if (!file_exists($this->params_dir)) {
+            $this->save();
+            return;
         }
+        $file = fopen($this->params_dir, "r");
+        $json = fread($file, filesize($this->params_dir));
+        fclose($file);
+        $decoded = json_decode($json, true);
+        $this->params = array_merge($this->params, $decoded);
     }
 
     public function set()
@@ -51,11 +55,10 @@ class Conf
 
     public function save()
     {
-        $cookie_time = time() + (86400 * 365); //86400 - 1 day
-
-        foreach ($this->params as $key => $param) {
-            setcookie($key, $param, $cookie_time, '/');
-        }
+        $file = fopen($this->params_dir, "w");
+        $json = json_encode($this->params);
+        fwrite($file, $json);
+        fclose($file);
     }
 
     public function get($key)
